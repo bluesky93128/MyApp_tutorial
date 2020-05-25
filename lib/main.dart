@@ -179,6 +179,37 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.black,
+        appBarTheme: AppBarTheme(
+          color: Colors.black,
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
+        ),
+        colorScheme: ColorScheme.light(
+          primary: Colors.black,
+          onPrimary: Colors.black,
+          primaryVariant: Colors.black,
+          secondary: Colors.red,
+        ),
+        cardTheme: CardTheme(
+          color: Colors.black,
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.white54,
+        ),
+        textTheme: TextTheme(
+          bodyText1: TextStyle(
+            color: Colors.white,
+            fontSize: 50.0,
+          ),
+          bodyText2: TextStyle(
+            color: Colors.white70,
+            fontSize: 18.0,
+          ),
+        ),
+      ),
       home: CustomBottomBar(),
     );
   }
@@ -188,46 +219,52 @@ class CustomBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _getCustomAppBar(),
-      bottomNavigationBar: _getNavBar(context),
+      // appBar: _getCustomAppBar(),
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text('My App'),
+        centerTitle: true,
+      ),
       floatingActionButton: FloatingActionButton(
-        // onPressed: _incrementCounter,
+        onPressed: null,
         tooltip: 'Increment',
         child: Icon(Icons.add),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16.0)),
+          borderRadius: BorderRadius.all(Radius.circular(30)),
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: _getNavBar(context),
     );
   }
 }
 
-_getCustomAppBar(){
-  return PreferredSize(
-    preferredSize: Size.fromHeight(50),
-    child: Container(
-      alignment: Alignment.bottomCenter,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [
-            Colors.tealAccent,
-            Colors.redAccent,
-          ],
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-        IconButton(icon: Icon(Icons.menu), onPressed: (){}),
-        Text('Gradient AppBar', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
-        IconButton(icon: Icon(Icons.favorite), onPressed: (){}),
-      ],),
-    ),
-  );
-}
+// _getCustomAppBar(){
+//   return PreferredSize(
+//     preferredSize: Size.fromHeight(50),
+//     child: Container(
+//       alignment: Alignment.bottomCenter,
+//       decoration: BoxDecoration(
+//         gradient: LinearGradient(
+//           begin: Alignment.centerLeft,
+//           end: Alignment.centerRight,
+//           colors: [
+//             Colors.tealAccent,
+//             Colors.redAccent,
+//           ],
+//         ),
+//       ),
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: <Widget>[
+//         IconButton(icon: Icon(Icons.menu), onPressed: (){}),
+//         Text('Gradient AppBar', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),
+//         IconButton(icon: Icon(Icons.favorite), onPressed: (){}),
+//       ],),
+//     ),
+//   );
+// }
 
 _getNavBar(context) {
   return Stack(
@@ -244,22 +281,22 @@ _getNavBar(context) {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                  Colors.teal,
-                  Colors.teal.shade900,
+                  Colors.deepOrange.withOpacity(0),
+                  Colors.deepOrange.shade500,
                 ])),
           ),
         ),
       ),
-      Positioned(
-        bottom: 30,
-        width: MediaQuery.of(context).size.width,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _buildNavItem(Icons.add, true),
-          ],
-        ),
-      ),
+      // Positioned(
+      //   bottom: 30,
+      //   width: MediaQuery.of(context).size.width,
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //     children: <Widget>[
+      //       _buildNavItem(Icons.add, true),
+      //     ],
+      //   ),
+      // ),
     ],
   );
 }
@@ -288,7 +325,8 @@ class NavBarClipper extends CustomClipper<Path> {
     var sh = size.height;
 
     path.lineTo(4 * sw / 12, 0);
-    path.cubicTo(5 * sw / 12, 0, 5 * sw / 12, 3 * sh / 5, 6 * sw / 12, 3 * sh / 5);
+    path.cubicTo(
+        5 * sw / 12, 0, 5 * sw / 12, 3 * sh / 5, 6 * sw / 12, 3 * sh / 5);
     path.cubicTo(7 * sw / 12, 3 * sh / 5, 7 * sw / 12, 0, 8 * sw / 12, 0);
     path.lineTo(sw, 0);
     path.lineTo(sw, sh);
