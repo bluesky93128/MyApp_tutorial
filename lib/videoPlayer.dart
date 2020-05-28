@@ -4,7 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
-  VideoPlayerScreen({Key key}) : super(key: key);
+  // VideoPlayerScreen({Key key}) : super(key: key);
+  var videoData;
+
+  VideoPlayerScreen(data) {
+    videoData = data;
+  }
 
   @override
   _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
@@ -20,8 +25,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     // offers several different constructors to play videos from assets, files,
     // or the internet.
     _controller = VideoPlayerController.network(
-      'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-    );
+        // 'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
+        widget.videoData['sources'][0]);
+    _controller.play();
 
     // Initialize the controller and store the Future for later use.
     _initializeVideoPlayerFuture = _controller.initialize();
@@ -86,7 +92,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                     size: 100,
                   )
                 : Container(),
-          )
+          ),
         ]),
       ),
     );

@@ -1,6 +1,8 @@
 import 'package:MyApp/videoPlayer.dart';
 import 'package:flutter/material.dart';
 import 'package:MyApp/bottomAppBar.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:MyApp/api.dart';
 
 void main() {
   runApp(MyApp());
@@ -51,15 +53,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -68,10 +61,23 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
+  List videos = List();
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future<List> future = getVideos();
+    future
+        .then((value) => setState(() {
+              videos = value;
+            }))
+        .catchError((onError) => print(onError));
   }
 
   @override
@@ -82,10 +88,16 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
       ),
       body: Center(
-        child: VideoPlayerScreen(),
+        child: videos.length != 0 ? PageView.builder(
+          itemBuilder: (BuildContext context, int index) {
+            return VideoPlayerScreen(videos[index]);
+          },
+          scrollDirection: Axis.vertical,
+          itemCount: videos.length,
+        ) : Container(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: null,
+        onPressed: () {},
         tooltip: 'Increment',
         child: Icon(Icons.add),
         backgroundColor: Colors.deepOrangeAccent,
